@@ -6,7 +6,6 @@ import com.zrpc.core.RpcAcceptor;
 import com.zrpc.core.RpcProcessor;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -49,7 +48,8 @@ public class  NettyRpcAcceptor implements RpcAcceptor{
              });
 
             // Start the server.
-            ChannelFuture f =  b.bind(host,port).sync();
+             b.bind(host,port).sync();
+//            ChannelFuture f =  b.bind(host,port).sync();
             System.out.println("started and listen on");
             // Wait until the server socket is closed.
           //  f.channel().closeFuture().sync();
