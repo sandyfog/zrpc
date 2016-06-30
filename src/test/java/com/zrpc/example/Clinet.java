@@ -13,12 +13,12 @@ public class Clinet {
 		HelloService service = client.refer(HelloService.class);
 		
 		//同步调用
-		System.out.println(service.hello("test rp0000c"));
+		System.out.println(service.hello("test rpc"));
 		
 		//异步调用1
 		RpcContext ctx = RpcContext.getContext();
 		ctx.setAsync(true);
-		String obj=service.hello("test rp0000c");
+		String obj=service.hello("test rpc");
 		System.out.println(obj==null);
 		Future<String> f =ctx.getFuture();
 		System.out.println(f.get());
@@ -36,12 +36,12 @@ public class Clinet {
 			
 			@Override
 			public void onError(Throwable thr) {
-				System.out.println("thr");
+				System.out.println("error");
 				thr.printStackTrace();
 			}
 		});
 		
-		String result = service.hello("test rp0000c");
+		String result = service.hello("test rpc");
 		System.out.println(result == null);
 		
 
@@ -52,7 +52,7 @@ public class Clinet {
 		 */
 //		RpcContext ctx = RpcContext.getContext();
 //		ctx.setOneway(true);
-//		System.out.println(service.hello("test rp0000c"));
+//		System.out.println(service.hello("test rpc"));
 	}
 
 }

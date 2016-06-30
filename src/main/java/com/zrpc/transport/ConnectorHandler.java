@@ -10,13 +10,13 @@ import com.zrpc.core.RpcResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class ObjectServerHandler extends  SimpleChannelInboundHandler<RpcRequest> {
+public class ConnectorHandler extends  SimpleChannelInboundHandler<RpcRequest> {
 
     private static final Logger logger = Logger.getLogger(
-    		ObjectServerHandler.class.getName());
+    		ConnectorHandler.class.getName());
    private NettyRpcAcceptor acceptor;
     
-    public   ObjectServerHandler(NettyRpcAcceptor acceptor){
+    public   ConnectorHandler(NettyRpcAcceptor acceptor){
     	this.acceptor=acceptor;
     }
     

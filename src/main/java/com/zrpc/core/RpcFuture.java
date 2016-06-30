@@ -31,7 +31,7 @@ public class RpcFuture<V> implements Future<V> {
 				while (!done) {
 					wait(timeoutMillis);
 					if (endTime < System.currentTimeMillis() && !done) {
-						exception = new TimeoutException();
+						exception = new TimeoutException("time out");
 						break;
 					}
 				}

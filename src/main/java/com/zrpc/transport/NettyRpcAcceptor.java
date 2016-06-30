@@ -4,6 +4,9 @@ import java.io.IOException;
 
 import com.zrpc.core.RpcAcceptor;
 import com.zrpc.core.RpcProcessor;
+import com.zrpc.core.RpcRequest;
+import com.zrpc.core.codec.RpcDecoder;
+import com.zrpc.core.codec.RpcEncoder;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -12,9 +15,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
@@ -23,11 +23,10 @@ public class  NettyRpcAcceptor implements RpcAcceptor{
     private String host;
     private int port;
     private RpcProcessor processor;
-    EventLoopGroup bossGroup;
-    EventLoopGroup workerGroup;
-  	
+    private EventLoopGroup bossGroup;
+    private  EventLoopGroup workerGroup;
 	public void init() throws IOException {
-		 // Configure the server.
+		// Configure the server.
          bossGroup = new NioEventLoopGroup();
          workerGroup = new NioEventLoopGroup();
         try {
@@ -41,9 +40,9 @@ public class  NettyRpcAcceptor implements RpcAcceptor{
                  public void initChannel(SocketChannel ch) throws Exception {
                      ch.pipeline().addLast(
                              new LoggingHandler(LogLevel.INFO),
-                    		  new ObjectEncoder(),
-                              new ObjectDecoder(ClassResolvers.cacheDisabled(null)),
-                              new ObjectServerHandler(NettyRpcAcceptor.this));
+                    		  new RpcEncoder(),
+                              new RpcDecoder(RpcRequest.class),
+                              new ConnectorHandler(NettyRpcAcceptor.this));
                  }
              });
 

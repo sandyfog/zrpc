@@ -11,6 +11,8 @@ import com.zrpc.core.RpcFuture;
 import com.zrpc.core.RpcFutureUtil;
 import com.zrpc.core.RpcRequest;
 import com.zrpc.core.RpcResponse;
+import com.zrpc.core.codec.RpcDecoder;
+import com.zrpc.core.codec.RpcEncoder;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -21,9 +23,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 
 public class NettyRpcConnector implements RpcConnector {
 
@@ -42,9 +41,9 @@ public class NettyRpcConnector implements RpcConnector {
 						public void initChannel(SocketChannel ch) throws Exception {
 							ch.pipeline().addLast(
 //									new LoggingHandler(LogLevel.INFO),
-									new ObjectEncoder(), 
-									new ObjectDecoder(ClassResolvers.cacheDisabled(null)),
-									new ObjectClientHandler(futureUtil));
+									new RpcEncoder(),
+									new RpcDecoder(RpcResponse.class),
+									new AcceptorHandler(futureUtil));
 						}
 					});
 
