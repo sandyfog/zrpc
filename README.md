@@ -41,8 +41,8 @@
 		}
 		@Override
 		public void onError(Throwable thr) {
-		        System.out.println("error");
-			thr.printStackTrace();
+		       System.out.println("error");
+		       thr.printStackTrace();
 		}
 		});
   String obj=service.hello("test rpc");
