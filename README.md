@@ -15,7 +15,7 @@
   System.out.println(service.hello("test rpc"));
 ```
 ## 异步调用  
-默认的远程调用都是同步的，发起一个异步调用的代码示例如下  
+默认的远程调用都是同步的，发起异步调用需要设置`RpcContext.setAsync(true) `,异步调用有两种方式：`Future`方式、`callback`方式，可以单独使用也可以混合使用
 `Future`方式
 ```java
   RpcClient client = new RpcClient("127.0.0.1",1234);
