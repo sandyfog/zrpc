@@ -41,7 +41,7 @@
 		}
 		@Override
 		public void onError(Throwable thr) {
-		        System.out.println("thr");
+		        System.out.println("error");
 			thr.printStackTrace();
 		}
 		});
