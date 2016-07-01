@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zrpc.core.RpcConnector;
 import com.zrpc.core.RpcContext;
 import com.zrpc.core.RpcException;
@@ -25,7 +28,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class NettyRpcConnector implements RpcConnector {
-
+	private static final Logger LOG = LoggerFactory.getLogger(NettyRpcConnector.class);
 	private String host;
 	private int port;
 	private Channel chanel;
@@ -128,9 +131,12 @@ public class NettyRpcConnector implements RpcConnector {
 		} catch (IOException e) {
 			throw new RpcException("network error", e); 
 		} catch (TimeoutException e) {
-			throw new RpcException("client timeout", e);
+//			throw new RpcException("client timeout", e);
+			LOG.warn("client timeout", e);
 		} catch (Exception e) {
 			throw new RpcException("unknown error", e);
 		}
+		
+		return null;
 	}
 }
