@@ -7,7 +7,7 @@ import com.zrpc.example.HelloService;
 public class Clinet {
 
 	public static void main(String[] args) throws Exception {
-		//负载均衡设置
+		//负载均衡设置 
 //		Cluster cluster = new Cluster(WeightRoute.class);
 //		Cluster cluster = new Cluster(RandomRoute.class);
 		Cluster cluster = new Cluster(RoundRobinRoute.class);
