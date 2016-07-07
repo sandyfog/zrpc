@@ -63,6 +63,7 @@
 ```
 
 # 分布式rpc调用
+配置zookeeper等信息见`RpcConfig`
 ## 服务端
 ```java
      RpcServer server = new RpcServer("127.0.0.1",1234,60);//60 weight WeightRoute时起作用
