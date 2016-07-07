@@ -7,4 +7,5 @@ public interface RpcConnector {
 	public void setHost(String host);
 	public void setport(int port);
 	public void start() throws IOException ;
+	public void stop() throws IOException ;
 }

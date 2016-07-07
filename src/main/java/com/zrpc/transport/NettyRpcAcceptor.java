@@ -39,10 +39,10 @@ public class  NettyRpcAcceptor implements RpcAcceptor{
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
                      ch.pipeline().addLast(
-                             new LoggingHandler(LogLevel.INFO),
+//                             new LoggingHandler(LogLevel.INFO),
                     		  new RpcEncoder(),
                               new RpcDecoder(RpcRequest.class),
-                              new ConnectorHandler(NettyRpcAcceptor.this));
+                              new AcceptorHandler(NettyRpcAcceptor.this));
                  }
              });
 
