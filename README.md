@@ -1,6 +1,7 @@
 # ZRPC
 基于netty实现的RPC框架
 
+# 点对点调用
 ## 服务端
 ```java
   RpcServer server = new RpcServer("127.0.0.1",1234);
@@ -61,3 +62,23 @@
   System.out.println(service.hello("test rpc")==null);
 ```
 
+# 分布式rpc调用
+## 服务端
+```java
+        RpcServer server = new RpcServer("127.0.0.1",1234,60);//60 weight WeightRoute时起作用
+	server.setRegistry(true);          //设置向注册中心注册
+	HelloServiceImpl impl = new HelloServiceImpl();
+	server.export(HelloService.class, impl);
+```
+## 客服端
+```java
+	//负载均衡设置
+//	Cluster cluster = new Cluster(WeightRoute.class);
+//	Cluster cluster = new Cluster(RandomRoute.class);
+	Cluster cluster = new Cluster(RoundRobinRoute.class);
+	HelloService service = cluster.refer(HelloService.class);
+		
+	for (int i = 0; i < 10; i++) {			
+		System.out.println(service.hello("test rpc"));
+	}
+```
