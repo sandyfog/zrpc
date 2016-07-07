@@ -6,6 +6,8 @@ public class Exporter {
 
 	protected ConcurrentHashMap<String, Object> serviceEngine = new ConcurrentHashMap<>();
 
+	private Exporter() {
+	}
 
 	public void export(Class<?> clazz, Object obj, String version) {
 
@@ -35,7 +37,6 @@ public class Exporter {
 		return service;
 	}
 
-	
 	public Object findService(String clazzName, String version) {
 
 		if (version == null) {
@@ -46,4 +47,13 @@ public class Exporter {
 		return service;
 
 	}
+
+	public static Exporter getInstace() {
+		return Holder.INSTNACE;
+	}
+
+	private static class Holder {
+		public static final Exporter INSTNACE = new Exporter();
+	}
+
 }

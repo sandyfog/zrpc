@@ -3,6 +3,7 @@ package com.zrpc.core;
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.zrpc.cluster.ServiceRegistry;
 import com.zrpc.transport.NettyRpcAcceptor;
 
 
@@ -11,9 +12,20 @@ public class RpcServer {
 	private RpcProcessor processor;
 	private RpcAcceptor acceptor;
 	private Exporter exporter;
-	public RpcServer(){}
+	private String host;
+	private int port;
+	private int weight;
+	private  boolean registry = false;
+	
 	public RpcServer(String host,int port){
-		exporter = new Exporter();
+	   this(host, port, 100);
+	}
+	public RpcServer(String host,int port, int weight){
+		this.host = host;
+		this.port = port;
+		this.weight = weight;
+		
+		exporter = Exporter.getInstace();
 		acceptor = new NettyRpcAcceptor();
 		acceptor.setHost(host);
 		acceptor.setport(port);		
@@ -28,11 +40,17 @@ public class RpcServer {
 		
 	}
 	
+	public void setRegistry(boolean registry) {
+		this.registry = registry;
+	}
 	public void export(Class<?> clazz, Object obj) {
 		export(clazz, obj, null);
 	}
 	public void export(Class<?> clazz, Object obj, String version) {
 		exporter.export(clazz, obj, version);
+		if(registry){
+			ServiceRegistry.getInstace().registerServer(clazz, host+":"+port, ""+weight);
+		}
 	}
 	
 }

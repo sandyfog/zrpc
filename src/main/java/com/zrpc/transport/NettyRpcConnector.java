@@ -33,9 +33,10 @@ public class NettyRpcConnector implements RpcConnector {
 	private int port;
 	private Channel chanel;
     private RpcFutureUtil futureUtil = new RpcFutureUtil();
+    private  EventLoopGroup group;
 	public void init() {
 		// Configure the client.
-		EventLoopGroup group = new NioEventLoopGroup();
+		group = new NioEventLoopGroup();
 		try {
 			Bootstrap b = new Bootstrap();
 			b.group(group).channel(NioSocketChannel.class).option(ChannelOption.TCP_NODELAY, true)
@@ -46,7 +47,7 @@ public class NettyRpcConnector implements RpcConnector {
 //									new LoggingHandler(LogLevel.INFO),
 									new RpcEncoder(),
 									new RpcDecoder(RpcResponse.class),
-									new AcceptorHandler(futureUtil));
+									new ConnectorHandler(futureUtil));
 						}
 					});
 
@@ -138,5 +139,17 @@ public class NettyRpcConnector implements RpcConnector {
 		}
 		
 		return null;
+	}
+
+
+
+	@Override
+	public void stop() throws IOException {
+		group.shutdownGracefully();
+		
+	}
+	
+	public String toString(){
+		return host +":"+port;
 	}
 }

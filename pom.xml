@@ -4,7 +4,7 @@
 
 	<groupId>com</groupId>
 	<artifactId>zrpc</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>zrpc</name>
@@ -45,11 +45,17 @@
 			<artifactId>protostuff-core</artifactId>
 			<version>1.0.8</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.dyuproject.protostuff</groupId>
 			<artifactId>protostuff-runtime</artifactId>
 			<version>1.0.8</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.4.6</version>
 		</dependency>
 
 		<dependency>

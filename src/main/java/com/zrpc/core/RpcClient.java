@@ -27,4 +27,12 @@ public class RpcClient {
 		
 	}
 	
+	public void stop(){
+		try {
+			connector.stop();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
